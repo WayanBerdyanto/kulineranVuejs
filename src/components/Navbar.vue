@@ -13,7 +13,7 @@
 
         <b-navbar-nav class="ml-auto">
           <b-nav-item to="/keranjang" tag="router-link" active-class="active">
-            Keranjang
+            Cart
             <b-icon icon="cart"></b-icon>
             <b-badge variant="success" class="ml-2">0</b-badge>
           </b-nav-item>
