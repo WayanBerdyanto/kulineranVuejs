@@ -39,7 +39,7 @@
             Price : Rp <strong> {{ product.harga }}</strong>
           </h4>
 
-          <form action="">
+          <form class="mt-4" v-on:submit.prevent>
             <div class="form-group mb-3">
               <label for="count_order">Count Order</label>
               <div class="input-group">
@@ -52,12 +52,12 @@
                   </span>
                 </div>
                 <input
-                id="count_order"
+                  id="count_order"
                   type="text"
                   class="form-control form-control-order"
                   aria-label="Amount (to the nearest dollar)"
-                  :value="count"
                   readonly
+                  v-model="pesan.jumlah_pemesanan"
                 />
                 <div class="input-group-append">
                   <span
@@ -73,13 +73,14 @@
             <div class="form-group mb-3">
               <label for="information">Information</label>
               <textarea
+                v-model="pesan.keterangan"
                 id="information"
                 class="form-control"
-                placeholder="example: Spicy  "
+                placeholder="example: Spicy"
               ></textarea>
             </div>
 
-            <button type="submit" class="btn btn-success">
+            <button type="submit" class="btn btn-success" @click="pemesanan">
               Order
               <b-icon-cart></b-icon-cart>
             </button>
@@ -95,7 +96,8 @@
 import Navbar from "@/components/Navbar.vue";
 import FooterVue from "@/components/Footer.vue";
 import axios from "axios";
-import { ref, watch } from "vue";
+import { ref } from "vue";
+import Swal from "sweetalert2";
 
 export default {
   name: "FoodDetail",
@@ -104,24 +106,23 @@ export default {
     FooterVue,
   },
   setup() {
-    const count = ref(0);
+    const pesan = ref({
+      jumlah_pemesanan: 0,
+      keterangan: "",
+    });
 
     const increment = () => {
-      count.value++;
+      pesan.value.jumlah_pemesanan++;
     };
 
     const decrement = () => {
-      count.value--;
+      if (pesan.value.jumlah_pemesanan > 1) {
+        pesan.value.jumlah_pemesanan--;
+      }
     };
 
-    watch(count, (newValue) => {
-      if (newValue < 0) {
-        count.value = 0;
-      }
-    });
-
     return {
-      count,
+      pesan,
       increment,
       decrement,
     };
@@ -135,6 +136,48 @@ export default {
   methods: {
     setProduct(data) {
       this.product = data;
+    },
+    pemesanan() {
+      this.pesan.products = this.product;
+      if (this.pesan.jumlah_pemesanan) {
+        axios
+          .post("http://localhost:3000/keranjangs", this.pesan)
+          .then(() => {
+            this.$router.push({path: "/cart"})
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              },
+            });
+            Toast.fire({
+              icon: "success",
+              title: "Order Successfully",
+            });
+          })
+          .catch((err) => console.log(err));
+      } else {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "error",
+          title: "Please Input Data",
+        });
+      }
     },
   },
   mounted() {

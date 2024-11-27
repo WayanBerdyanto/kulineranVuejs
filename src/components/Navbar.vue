@@ -12,10 +12,12 @@
         </b-navbar-nav>
 
         <b-navbar-nav class="ml-auto">
-          <b-nav-item to="/keranjang" tag="router-link" active-class="active">
+          <b-nav-item to="/cart" tag="router-link" active-class="active">
             Cart
             <b-icon icon="cart"></b-icon>
-            <b-badge variant="success" class="ml-2">0</b-badge>
+            <b-badge variant="success" class="ml-2">
+              {{ updateKeranjang ? updateKeranjang.length : jumlah_pesanans.length }}
+            </b-badge>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
@@ -24,7 +26,35 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "NavbarVue",
+  data() {
+    return {
+      jumlah_pesanans: []
+    }
+  },
+  props: [
+    'updateKeranjang'
+  ],
+  methods: {
+    setJumlah(data){
+      this.jumlah_pesanans = data
+    }
+  },
+  mounted() {
+    axios
+      .get("http://localhost:3000/keranjangs")
+      .then((response) => {
+        // handle success
+        console.log("Berhasil", response);
+        this.setJumlah(response.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log("gagal", error);
+      });
+  },
 };
 </script>
