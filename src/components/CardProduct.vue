@@ -14,10 +14,10 @@
       <p class="card-text">
         Price : Rp {{ product.harga }}
       </p>
-      <a href="#" class="btn btn-success">
+      <router-link :to="'/foods/' + product.id" class="btn btn-success">
        Order
        <b-icon-cart></b-icon-cart>
-      </a>
+      </router-link>
     </div>
   </div>
 </template>
