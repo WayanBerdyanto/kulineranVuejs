@@ -1,0 +1,22 @@
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.router-link-exact-active {
+  color: #4eb883 !important;
+  font-weight: 500 !important; /* Use sparingly */
+}
+
+.btn-success {
+  background-color: #4eb883;
+  border: none;
+  transition-duration: 400ms;
+}
+
+.btn-success:hover {
+  background-color: #57ca91;
+}
+
+.badge-success{
+  background-color: #4eb883;
+}
