@@ -4,6 +4,8 @@
       :src="'assets/images/' + product.gambar"
       class="card-img-top"
       :alt="product.gambar"
+      width="100%"
+      height="250"
     />
     <div class="card-body">
       <h5 class="card-title">

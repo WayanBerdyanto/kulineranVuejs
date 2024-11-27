@@ -8,7 +8,7 @@
         <div class="col">
           <h2>
             <span class="font-weight-normal">Best</span>
-            <strong>Foods</strong>
+            <strong> Foods</strong>
           </h2>
         </div>
         <div class="col">

@@ -14,10 +14,10 @@
               <p class="font-weight-light">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
               </p>
-              <button class="btn btn-md btn-success">
+              <router-link to="/foods" class="btn btn-md btn-success">
                 Order Now
                 <b-icon-arrow-right></b-icon-arrow-right>
-              </button>
+              </router-link>
             </div>
           </div>
         </div>
