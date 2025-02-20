@@ -1,7 +1,7 @@
 <template>
   <div class="card shadow card-product">
     <img
-      :src="'assets/images/' + product.gambar"
+      :src="'http://kulineran-backend.wayanberdyanto.website/assets/' + product.gambar"
       class="card-img-top"
       :alt="product.gambar"
       width="100%"

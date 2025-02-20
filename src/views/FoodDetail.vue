@@ -23,7 +23,10 @@
       <div class="row mt-4">
         <div class="col-md-6">
           <img
-            :src="'../assets/images/' + product.gambar"
+            :src="
+              'http://kulineran-backend.wayanberdyanto.website/assets/' +
+              product.gambar
+            "
             :alt="product.gambar"
             class="img-fluid"
           />
@@ -140,10 +143,23 @@ export default {
     pemesanan() {
       this.pesan.products = this.product;
       if (this.pesan.jumlah_pemesanan) {
+        const payload = {
+          product_id: this.product.id, // Pastikan mengirim product_id
+          jumlah_pemesanan: this.pesan.jumlah_pemesanan,
+          keterangan: this.pesan.keterangan || "",
+        };
         axios
-          .post("http://localhost:3000/keranjangs", this.pesan)
+          .post(
+            "http://kulineran-backend.wayanberdyanto.website/keranjangs.php",
+            payload,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          )
           .then(() => {
-            this.$router.push({path: "/cart"})
+            this.$router.push({ path: "/cart" });
             const Toast = Swal.mixin({
               toast: true,
               position: "top-end",
@@ -181,8 +197,11 @@ export default {
     },
   },
   mounted() {
+    const productId = this.$route.params.id;
     axios
-      .get("http://localhost:3000/products/" + this.$route.params.id)
+      .get(
+        `http://kulineran-backend.wayanberdyanto.website/products.php?id=${productId}`
+      )
       .then((response) => {
         // handle success
         console.log("Berhasil", response);
@@ -196,5 +215,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

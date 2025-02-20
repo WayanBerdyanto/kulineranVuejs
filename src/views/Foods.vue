@@ -70,7 +70,7 @@ export default {
     },
     searchFood() {
       axios
-        .get("http://localhost:3000/products?q="+this.search)
+        .get("http://kulineran-backend.wayanberdyanto.website/products.php?q="+this.search)
         .then((response) => {
           // handle success
           console.log("Berhasil", response);
@@ -84,7 +84,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost:3000/products")
+      .get("http://kulineran-backend.wayanberdyanto.website/products.php")
       .then((response) => {
         // handle success
         console.log("Berhasil", response);

@@ -45,7 +45,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost:3000/keranjangs")
+      .get("http://kulineran-backend.wayanberdyanto.website/keranjangs.php")
       .then((response) => {
         // handle success
         console.log("Berhasil", response);

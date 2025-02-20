@@ -61,7 +61,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost:3000/best-products")
+      .get("http://kulineran-backend.wayanberdyanto.website/best-products.php")
       .then((response) => {
         // handle success
         console.log("Berhasil", response);

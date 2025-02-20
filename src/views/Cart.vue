@@ -1,6 +1,6 @@
 <template>
   <div class="cart">
-    <Navbar :updateKeranjang="keranjangs"/>
+    <Navbar :updateKeranjang="keranjangs" />
     <div class="container">
       <div class="row mt-5">
         <div class="col">
@@ -133,10 +133,49 @@ export default {
         minimumFractionDigits: 0,
       }).format(value);
     },
+    // deleteKeranjang(id) {
+    //   console.log(id)
+    //   axios
+    //     .delete("http://kulineran-backend.wayanberdyanto.website/keranjangs.php/" + id)
+    //     .then(() => {
+    //       const Toast = Swal.mixin({
+    //         toast: true,
+    //         position: "top-end",
+    //         showConfirmButton: false,
+    //         timer: 3000,
+    //         timerProgressBar: true,
+    //         didOpen: (toast) => {
+    //           toast.onmouseenter = Swal.stopTimer;
+    //           toast.onmouseleave = Swal.resumeTimer;
+    //         },
+    //       });
+    //       Toast.fire({
+    //         icon: "success",
+    //         title: "Delete Successfully",
+    //       });
+    //       axios
+    //         .get("http://kulineran-backend.wayanberdyanto.website/keranjangs.php")
+    //         .then((response) => {
+    //           console.log("Berhasil", response);
+    //           this.setKeranjangs(response.data);
+    //         })
+    //         .catch(function (error) {
+    //           console.log("gagal", error);
+    //         });
+    //     })
+    //     .catch(function (error) {
+    //       // handle error
+    //       console.log("gagal", error);
+    //     });
+    // },
     deleteKeranjang(id) {
+      console.log("ID yang akan dihapus:", id);
       axios
-        .delete("http://localhost:3000/keranjangs/" + id)
-        .then(() => {
+        .delete(
+          `http://kulineran-backend.wayanberdyanto.website/keranjangs.php/${id}`
+        )
+        .then((response) => {
+          console.log("Response sukses:", response);
           const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -150,27 +189,33 @@ export default {
           });
           Toast.fire({
             icon: "success",
-            title: "Delete Successfully",
+            title: "Berhasil Dihapus",
           });
+          // Refresh data
           axios
-            .get("http://localhost:3000/keranjangs")
+            .get(
+              "http://kulineran-backend.wayanberdyanto.website/keranjangs.php"
+            )
             .then((response) => {
-              console.log("Berhasil", response);
               this.setKeranjangs(response.data);
             })
-            .catch(function (error) {
-              console.log("gagal", error);
+            .catch((error) => {
+              console.error("Gagal refresh:", error);
             });
         })
-        .catch(function (error) {
-          // handle error
-          console.log("gagal", error);
+        .catch((error) => {
+          console.error("Error detail:", error.response);
+          Swal.fire({
+            icon: "error",
+            title: "Gagal Menghapus",
+            text: error.response?.data?.error || "Terjadi kesalahan",
+          });
         });
     },
   },
   mounted() {
     axios
-      .get("http://localhost:3000/keranjangs")
+      .get("http://kulineran-backend.wayanberdyanto.website/keranjangs.php")
       .then((response) => {
         // handle success
         console.log("Berhasil", response);
@@ -191,5 +236,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
