@@ -1,5 +1,8 @@
 # kulineran
 
+## DEMO
+Link [DEMO Kuliner](https://kulineran-vuejs.wayanberdyanto.website/)
+
 ## Project setup
 ```
 npm install
@@ -32,8 +35,6 @@ npm install json-server
 ```
 $ npx json-server db.json
 ```
-
-
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
